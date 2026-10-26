@@ -1,0 +1,2147 @@
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1280px) {
+  .menu-screen {
+    padding: 0 clamp(22px, 3.4vw, 44px);
+  }
+
+  .menu-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 386px);
+    gap: clamp(32px, 5vw, 72px);
+  }
+
+  .menu-title {
+    font-size: clamp(88px, 12vw, 150px);
+  }
+
+  .profile-panel {
+    padding: 22px 22px 18px;
+  }
+
+  .origin-card {
+    min-height: 430px;
+    padding: 20px;
+  }
+
+  .sandbox-hero {
+    grid-template-columns: 180px minmax(0, 1fr) 292px;
+    gap: 26px;
+  }
+
+  .studio-layout {
+    grid-template-columns: 188px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .studio-hero {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .studio-enemies {
+    grid-template-columns: 246px minmax(0, 1fr);
+  }
+
+  .studio-ai {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .deckbuilder-layout {
+    grid-template-columns: 306px minmax(0, 1fr);
+  }
+
+  .enemy-showcase {
+    width: min(940px, 100%);
+    grid-template-columns: minmax(200px, 300px) minmax(0, 1fr);
+    gap: clamp(24px, 3vw, 44px);
+  }
+
+  .enemy-figure {
+    max-width: 300px;
+  }
+
+  .hand .hand-card {
+    flex: 0 0 128px;
+    width: 128px;
+  }
+}
+
+@media (max-width: 1120px) {
+  /* Menu stacks and centers */
+
+  .menu-screen {
+    overflow-x: hidden;
+  }
+
+  .menu-layout {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    width: min(680px, 100%);
+    gap: 30px;
+    padding: 36px 0 56px;
+  }
+
+  .menu-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  .menu-title {
+    font-size: clamp(76px, 15vw, 122px);
+  }
+
+  .menu-lead {
+    margin-top: 24px;
+  }
+
+  .menu-actions {
+    width: min(470px, 100%);
+    margin-top: 26px;
+    text-align: left;
+  }
+
+  .menu-actions__foot {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .menu-note {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .profile-panel {
+    width: min(420px, 100%);
+  }
+
+  .profile-portrait {
+    width: min(100%, 250px);
+  }
+
+  .floating-hand {
+    display: none;
+  }
+
+  /* Shared map rail becomes a horizontal HUD */
+
+  .map-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .run-rail {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(140px, 180px) minmax(150px, 1fr) minmax(150px, auto) auto;
+    grid-template-areas:
+      "hero vitals stats deck"
+      "relics relics relics relics"
+      "abandon abandon abandon abandon";
+    align-items: center;
+    gap: 10px 18px;
+    padding: 14px 16px;
+  }
+
+  .run-rail__hero {
+    grid-area: hero;
+  }
+
+  .run-rail__vitals {
+    grid-area: vitals;
+    margin: 0;
+  }
+
+  .run-rail__stats {
+    grid-area: stats;
+    margin: 0;
+    border: 0;
+  }
+
+  .run-rail__stats div {
+    padding: 0 10px;
+    border-left: 1px solid var(--line-faint);
+  }
+
+  .run-rail__stats div:first-child {
+    border-left: 0;
+  }
+
+  .run-rail__deck {
+    grid-area: deck;
+    width: auto;
+    min-width: 142px;
+  }
+
+  .run-rail__relics {
+    grid-area: relics;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding-top: 9px;
+    border-top: 1px solid var(--line-faint);
+  }
+
+  .run-rail__section-label {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  .run-rail__relics .relic-list {
+    flex: 1;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+  }
+
+  .run-rail__abandon {
+    grid-area: abandon;
+    margin: 0;
+    padding-top: 6px;
+    text-align: right;
+  }
+
+  .map-board {
+    min-height: max(560px, calc(var(--map-layers, 7) * 70px));
+  }
+
+  /* Sandbox hero: deck summary moves below */
+
+  .sandbox-hero {
+    grid-template-columns: 180px minmax(0, 1fr);
+    align-items: center;
+    row-gap: 22px;
+  }
+
+  .sandbox-deck {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) auto;
+    grid-template-areas:
+      "deck-eyebrow deck-eyebrow deck-eyebrow"
+      "deck-head deck-glyphs deck-stats"
+      "deck-health deck-health deck-actions";
+    align-items: center;
+    gap: 10px 24px;
+    padding: 18px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line-faint);
+  }
+
+  .sandbox-deck__eyebrow {
+    grid-area: deck-eyebrow;
+  }
+
+  .sandbox-deck__head {
+    grid-area: deck-head;
+    margin-top: 0;
+  }
+
+  .sandbox-deck__glyphs {
+    grid-area: deck-glyphs;
+    margin-top: 0;
+  }
+
+  .sandbox-deck__stats {
+    grid-area: deck-stats;
+    margin: 0;
+    border: 0;
+  }
+
+  .sandbox-deck__health {
+    grid-area: deck-health;
+    margin-bottom: 0;
+  }
+
+  .sandbox-deck__actions {
+    grid-area: deck-actions;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .sandbox-deck__actions .button {
+    width: auto;
+  }
+
+  .enemy-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trial-enemy:nth-child(3n + 2),
+  .trial-enemy:nth-child(3n + 3) {
+    animation-delay: 0s;
+  }
+}
+
+@media (max-width: 1080px) {
+  .deckbuilder-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding-top: 16px;
+  }
+
+  .deck-builder-panel {
+    position: static;
+    max-height: none;
+  }
+
+  .deck-builder-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 6px 10px;
+    max-height: 300px;
+  }
+
+  .deck-builder-panel__foot {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (max-width: 980px) {
+  /* Origins */
+
+  .origins-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .origin-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .origin-card {
+    min-height: 0;
+  }
+
+  .origin-confirm {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .origin-confirm__deck {
+    max-width: none;
+  }
+
+  .origin-confirm .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Studio layout collapses to horizontal tabs */
+
+  .studio-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  .studio-tabs {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .studio-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .studio-tab {
+    flex: 0 0 auto;
+    padding: 8px 11px;
+  }
+
+  .studio-tab__icon {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+
+  .studio-tabs__line,
+  .studio-tabs__note {
+    display: none;
+  }
+
+  .studio-enemies {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .enemy-roster__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .studio-note--roster {
+    display: none;
+  }
+
+  .studio-ai {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ai-side {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: start;
+    gap: 16px 22px;
+  }
+
+  .ai-side__privacy {
+    grid-column: 1 / -1;
+  }
+
+  /* Battle becomes a scrollable page */
+
+  .battle-screen {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
+  .battle-backdrop {
+    position: fixed;
+  }
+
+  .battle-header {
+    padding: 10px 16px;
+    gap: 12px;
+  }
+
+  .battle-main {
+    flex: 0 0 auto;
+    grid-template-rows: auto auto;
+    padding: 0 14px 26px;
+  }
+
+  .enemy-zone {
+    justify-content: flex-start;
+    padding: 52px 0 16px;
+  }
+
+  .intent-card {
+    top: 10px;
+    right: 0;
+    max-width: 240px;
+    padding: 8px 11px 8px 8px;
+  }
+
+  .intent-card__icon {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .intent-card__copy strong {
+    font-size: 13px;
+  }
+
+  .enemy-showcase {
+    width: 100%;
+    grid-template-columns: minmax(160px, 230px) minmax(0, 1fr);
+    gap: 22px;
+    padding: 4px 0;
+  }
+
+  .enemy-figure {
+    max-width: 230px;
+  }
+
+  .enemy-meta h1 {
+    margin-top: 7px;
+    font-size: clamp(30px, 5.4vw, 44px);
+  }
+
+  .enemy-quote {
+    margin-top: 10px;
+    font-size: 10px;
+  }
+
+  .enemy-status-row {
+    bottom: 2px;
+  }
+
+  .battle-floor {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .player-console {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 18px;
+    padding: 10px 14px;
+  }
+
+  .player-core {
+    flex: 1 1 280px;
+  }
+
+  .battle-log {
+    display: none;
+  }
+
+  .turn-console {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  .player-status-row {
+    min-height: 0;
+  }
+
+  .battle-trial-mark {
+    display: none;
+  }
+
+  .battle-overlay {
+    position: fixed;
+  }
+
+  /* Modals */
+
+  .modal-backdrop {
+    padding: 14px;
+  }
+
+  .modal {
+    max-height: calc(100vh - 28px);
+    max-height: calc(100dvh - 28px);
+  }
+
+  .editor-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .editor-preview {
+    position: static;
+    order: -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 14px;
+  }
+
+  .editor-preview > .section-eyebrow {
+    display: none;
+  }
+
+  .editor-preview-mount {
+    width: 132px;
+    flex: 0 0 132px;
+  }
+
+  .editor-preview__notes {
+    flex: 1;
+    margin: 0;
+    padding: 0 0 0 16px;
+    border-top: 0;
+    border-left: 1px solid var(--line-faint);
+  }
+
+  .generate-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .generate-preview {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .shop-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shop-side {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .guide-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .guide-block--wide {
+    grid-column: auto;
+  }
+
+  .event-scene {
+    gap: 18px;
+  }
+
+  .ending-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ending-stat:nth-child(4),
+  .ending-stat:nth-child(5) {
+    border-top: 1px solid var(--line-faint);
+  }
+}
+
+@media (max-width: 900px) {
+  .studio-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-studio-card {
+    width: min(460px, 100%);
+    margin: 0 auto;
+  }
+
+  .enemy-stage {
+    grid-template-columns: minmax(190px, 0.78fr) minmax(0, 1.22fr);
+    gap: 18px;
+    padding: 18px;
+  }
+
+  .modal-backdrop {
+    padding: 12px;
+  }
+
+  .modal__header {
+    padding: 18px 18px 14px;
+  }
+
+  .modal__body {
+    padding: 16px 18px;
+  }
+
+  .modal__footer {
+    padding: 12px 18px;
+  }
+}
+
+@media (max-width: 820px) {
+  .run-rail {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "hero deck"
+      "vitals vitals"
+      "stats stats"
+      "relics relics"
+      "abandon abandon";
+  }
+
+  .map-panel {
+    padding: 18px;
+  }
+
+  .map-legend {
+    gap: 8px 14px;
+  }
+
+  .map-legend__tip {
+    display: none;
+  }
+
+  .hand-tray {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 8px 10px 10px;
+  }
+
+  .pile-stack {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+    padding: 0 0 8px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-faint);
+  }
+
+  .energy-orb {
+    width: 54px;
+  }
+
+  .energy-orb__value {
+    font-size: 22px;
+  }
+
+  .energy-orb__max {
+    font-size: 8px;
+  }
+
+  .energy-orb__label {
+    display: none;
+  }
+
+  .pile-counts {
+    gap: 14px;
+  }
+
+  .hand-scroll {
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: 760px) {
+  .pagebar {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .pagebar__title span {
+    display: none;
+  }
+
+  .pagebar__title strong {
+    font-size: 17px;
+  }
+
+  .pagebar__actions {
+    gap: 10px;
+  }
+
+  .menu-topbar {
+    padding: 16px 0 14px;
+  }
+
+  .menu-title {
+    font-size: clamp(68px, 18vw, 104px);
+  }
+
+  .menu-lead {
+    font-size: 12px;
+    line-height: 1.95;
+  }
+
+  .menu-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .origins-layout {
+    width: calc(100% - 28px);
+    padding-top: 22px;
+  }
+
+  .origins-heading h1 {
+    font-size: clamp(30px, 7vw, 44px);
+  }
+
+  .map-layout {
+    padding: 12px 12px 24px;
+  }
+
+  .run-rail {
+    padding: 12px;
+  }
+
+  .map-panel__head {
+    align-items: flex-start;
+  }
+
+  .map-panel__head h1 {
+    font-size: 24px;
+  }
+
+  .map-board {
+    min-height: max(530px, calc(var(--map-layers, 7) * 66px));
+  }
+
+  .sandbox-layout {
+    padding: 18px 14px 60px;
+  }
+
+  .sandbox-hero {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 18px;
+    padding: 22px 18px;
+    text-align: center;
+  }
+
+  .sandbox-hero__portrait {
+    width: min(168px, 54%);
+    margin: 0 auto;
+  }
+
+  .sandbox-hero__copy h1 {
+    font-size: clamp(28px, 7vw, 38px);
+  }
+
+  .sandbox-hero__meta {
+    justify-content: center;
+  }
+
+  .sandbox-hero__actions {
+    justify-content: center;
+  }
+
+  .sandbox-deck {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    text-align: left;
+    padding-top: 16px;
+  }
+
+  .sandbox-deck__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sandbox-deck__actions .button {
+    width: 100%;
+  }
+
+  .sandbox-section__head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .enemy-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trial-enemy__art {
+    aspect-ratio: 1.85;
+  }
+
+  .creation-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .creation-new {
+    min-height: 260px;
+  }
+
+  .deckbuilder-layout {
+    padding: 14px 12px 50px;
+  }
+
+  .deck-pool {
+    padding: 16px;
+  }
+
+  .deck-pool__head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .deck-pool__toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .deck-pool__grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 14px 10px;
+  }
+
+  .studio-layout {
+    padding: 14px 12px 50px;
+  }
+
+  .studio-form-panel,
+  .ai-config,
+  .studio-cards {
+    padding: 18px;
+  }
+
+  .studio-origin-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .enemy-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .enemy-stage__art {
+    width: min(220px, 64%);
+    margin: 0 auto;
+  }
+
+  .studio-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .studio-panel-heading--row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .studio-card-meta {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .studio-card-meta .text-button {
+    margin-left: 0;
+  }
+
+  .ending-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ending-stat:nth-child(3) {
+    border-top: 1px solid var(--line-faint);
+  }
+
+  .ending-stat:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .battle-header {
+    padding: 9px 12px;
+  }
+
+  .battle-header__title strong {
+    font-size: 14px;
+  }
+
+  .battle-header__right {
+    gap: 8px;
+  }
+
+  .enemy-zone {
+    padding: 12px 0 16px;
+  }
+
+  .intent-card {
+    position: static;
+    align-self: flex-end;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 10px;
+  }
+
+  .enemy-showcase {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    text-align: center;
+  }
+
+  .enemy-figure {
+    max-width: 172px;
+  }
+
+  .enemy-aura {
+    left: 50%;
+    width: min(260px, 70vw);
+    opacity: 0.55;
+  }
+
+  .enemy-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0;
+  }
+
+  .enemy-tier::before,
+  .enemy-tier::after {
+    width: 16px;
+  }
+
+  .enemy-status-row {
+    position: static;
+    justify-content: center;
+    max-width: none;
+    margin-top: 2px;
+  }
+
+  .enemy-quote {
+    display: none;
+  }
+
+  .enemy-hp-row {
+    width: min(320px, 100%);
+    margin-top: 10px;
+  }
+
+  .player-console {
+    flex-wrap: wrap;
+  }
+
+  .player-core {
+    flex-basis: 100%;
+  }
+
+  .turn-console {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .turn-console .end-turn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .hand .hand-card {
+    flex: 0 0 110px;
+    width: 110px;
+  }
+
+  .battle-floor {
+    gap: 10px;
+  }
+
+  .battle-overlay {
+    padding: 14px;
+  }
+
+  .result-panel {
+    padding: 26px 18px;
+  }
+
+  .result-panel h2 {
+    font-size: clamp(28px, 9vw, 40px);
+  }
+
+  .reward-cards {
+    grid-template-columns: minmax(0, 1fr);
+    width: min(280px, 100%);
+  }
+
+  .result-stats {
+    gap: 8px 14px;
+    font-size: 9px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .result-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Full-screen modals */
+
+  .modal-backdrop {
+    padding: 0;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 100vh;
+    max-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .modal__header {
+    padding: 16px 16px 12px;
+  }
+
+  .modal__body {
+    padding: 14px 16px;
+  }
+
+  .modal__footer {
+    padding: 12px 16px;
+  }
+
+  .field-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .effect-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .effect-row__index {
+    display: none;
+  }
+
+  .effect-row__kind {
+    flex: 1 1 100%;
+  }
+
+  .effect-row__amount {
+    flex: 1 1 calc(55% - 4px);
+  }
+
+  .effect-row__hits {
+    flex: 1 1 calc(30% - 4px);
+  }
+
+  .effect-row__remove {
+    align-self: flex-end;
+    margin-bottom: 0;
+    margin-left: auto;
+  }
+
+  .glyph-picker {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .deck-modal-grid {
+    grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
+  }
+
+  .shop-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .event-scene {
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .event-scene__halo {
+    top: 72px;
+    left: 50%;
+  }
+
+  .event-scene__glyph {
+    width: 70px;
+    height: 70px;
+    flex: 0 0 70px;
+    font-size: 24px;
+  }
+
+  .event-choice {
+    padding: 12px;
+  }
+
+  .event-choices {
+    gap: 6px;
+  }
+
+  .camp-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .camp-scene {
+    padding: 8px 0 12px;
+  }
+
+  .modal--editor .modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editor-footer-left,
+  .editor-footer-right {
+    width: 100%;
+  }
+
+  .editor-footer-right {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .modal__heading h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pagebar__title {
+    display: none;
+  }
+
+  .pagebar {
+    justify-content: space-between;
+  }
+
+  .pagebar__actions {
+    margin-left: auto;
+  }
+
+  .pagebar__back span {
+    font-size: 11px;
+  }
+
+  .brand__text {
+    font-size: 18px;
+    letter-spacing: 0.16em;
+  }
+
+  .menu-topbar__actions {
+    gap: 6px;
+  }
+
+  .menu-topbar__actions [data-action="open-guide"] {
+    display: none;
+  }
+
+  .menu-topbar__actions .text-button {
+    padding: 7px 8px;
+    font-size: 10px;
+  }
+
+  .menu-title {
+    font-size: clamp(62px, 19vw, 90px);
+  }
+
+  .menu-actions__foot {
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .menu-actions__foot .dot-separator {
+    display: none;
+  }
+
+  .profile-panel {
+    padding: 20px 18px 16px;
+  }
+
+  .origin-card {
+    padding: 18px;
+  }
+
+  .origin-confirm {
+    padding: 16px;
+  }
+
+  .map-panel {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .map-panel__head {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .map-panel__head p {
+    line-height: 1.7;
+  }
+
+  .map-progress {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .map-progress strong {
+    font-size: 22px;
+  }
+
+  .map-board {
+    min-height: max(500px, calc(var(--map-layers, 7) * 60px));
+  }
+
+  .map-node__disc {
+    width: 42px;
+    height: 42px;
+  }
+
+  .map-node--boss .map-node__disc {
+    width: 56px;
+    height: 56px;
+  }
+
+  .map-node__label {
+    padding: 2px 5px;
+    font-size: 7px;
+    letter-spacing: 0.08em;
+  }
+
+  .map-legend {
+    font-size: 9px;
+  }
+
+  .run-rail {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .run-rail__portrait {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+
+  .run-rail__deck {
+    min-width: 0;
+    padding: 8px 10px;
+  }
+
+  .run-rail__deck small {
+    display: none;
+  }
+
+  .run-rail__section-label {
+    display: none;
+  }
+
+  .sandbox-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sandbox-hero__actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sandbox-hero__meta {
+    gap: 10px;
+  }
+
+  .enemy-gallery .trial-enemy__art {
+    aspect-ratio: 1.7;
+  }
+
+  .trial-enemy__body {
+    padding: 14px;
+  }
+
+  .deck-builder-panel__foot {
+    flex-direction: column;
+  }
+
+  .deck-builder-panel__foot .button,
+  .deck-builder-panel__foot .text-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .deck-builder-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sandbox-deck__actions .button {
+    padding: 10px 12px;
+  }
+
+  .studio-tab__copy small {
+    display: none;
+  }
+
+  .studio-form-panel,
+  .ai-config,
+  .studio-cards {
+    padding: 16px;
+  }
+
+  .hero-studio-card {
+    padding: 18px;
+  }
+
+  .enemy-roster {
+    padding: 14px;
+  }
+
+  .enemy-roster__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .enemy-stage {
+    padding: 14px;
+  }
+
+  .enemy-stage__art {
+    width: min(200px, 70%);
+  }
+
+  .ai-side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ai-side__privacy {
+    grid-column: auto;
+  }
+
+  .studio-origin-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .studio-card {
+    max-width: none;
+  }
+
+  .field--hero-name input {
+    font-size: 20px;
+    padding: 12px 14px;
+  }
+
+  .ending-screen {
+    padding: 26px 14px;
+  }
+
+  .ending-content {
+    padding: 12px;
+  }
+
+  .ending-content h1 {
+    font-size: clamp(38px, 12vw, 56px);
+  }
+
+  .ending-emblem {
+    width: 78px;
+    height: 78px;
+    margin-bottom: 18px;
+  }
+
+  .ending-lead {
+    font-size: 12px;
+  }
+
+  .ending-bearer {
+    max-width: 100%;
+  }
+
+  .ending-bearer span:last-child {
+    min-width: 0;
+  }
+
+  .ending-actions {
+    flex-direction: column;
+  }
+
+  .ending-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Battle */
+
+  .battle-header__title span {
+    display: none;
+  }
+
+  .header-relics {
+    display: none;
+  }
+
+  .battle-header__right {
+    gap: 6px;
+  }
+
+  .battle-header__right .header-resource {
+    font-size: 11px;
+  }
+
+  .battle-header__right .icon-button {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+
+  .battle-main {
+    padding: 0 10px 18px;
+  }
+
+  .enemy-zone {
+    padding-top: 10px;
+  }
+
+  .intent-card {
+    margin-bottom: 8px;
+  }
+
+  .enemy-figure {
+    max-width: 156px;
+  }
+
+  .enemy-meta h1 {
+    font-size: clamp(27px, 8vw, 36px);
+  }
+
+  .enemy-hp-row .hp-label {
+    font-size: 15px;
+  }
+
+  .player-console {
+    padding: 10px;
+  }
+
+  .player-avatar {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .player-name-row strong {
+    font-size: 14px;
+  }
+
+  .turn-counter {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .turn-counter strong {
+    font-size: 16px;
+  }
+
+  .hand-tray {
+    padding: 8px;
+  }
+
+  .hand .hand-card {
+    flex: 0 0 104px;
+    width: 104px;
+  }
+
+  .energy-orb {
+    width: 50px;
+  }
+
+  .pile-counts > span {
+    font-size: 7px;
+  }
+
+  .battle-overlay {
+    padding: 10px;
+  }
+
+  .result-panel {
+    padding: 24px 16px;
+  }
+
+  .result-emblem {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 14px;
+  }
+
+  .reward-choice-heading {
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+  }
+
+  .result-footnote {
+    line-height: 1.8;
+  }
+
+  /* Modals */
+
+  .modal__header {
+    gap: 14px;
+  }
+
+  .modal__heading h2 {
+    font-size: 21px;
+  }
+
+  .modal__heading p {
+    font-size: 9px;
+  }
+
+  .modal__close {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .editor-preview {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .editor-preview-mount {
+    width: 118px;
+    flex-basis: auto;
+    align-self: center;
+  }
+
+  .editor-preview__notes {
+    margin-top: 8px;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--line-faint);
+    border-left: 0;
+  }
+
+  .generate-preview {
+    padding: 14px;
+  }
+
+  .generate-preview__frame {
+    width: 168px;
+  }
+
+  .shop-side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shop-card-grid {
+    gap: 12px 10px;
+  }
+
+  .shop-topline {
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+
+  .deck-modal-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .deck-modal-count {
+    margin-right: 0;
+  }
+
+  .camp-upgrade-list {
+    max-height: 48vh;
+  }
+
+  .camp-card-row {
+    flex-wrap: wrap;
+  }
+
+  .camp-card-row__copy {
+    flex-basis: calc(100% - 48px);
+  }
+
+  .camp-card-row__copy small {
+    white-space: normal;
+  }
+
+  .modal__footer {
+    gap: 8px;
+  }
+
+  .modal__footer .button {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .editor-footer-right .button {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-screen {
+    padding: 0 16px;
+  }
+
+  .menu-topbar__actions .text-button--accent {
+    padding-right: 4px;
+  }
+
+  .brand__mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand__text {
+    font-size: 16px;
+  }
+
+  .menu-title {
+    font-size: clamp(56px, 21vw, 78px);
+  }
+
+  .menu-lead {
+    font-size: 11.5px;
+  }
+
+  .menu-action {
+    gap: 11px;
+    padding: 12px 13px;
+  }
+
+  .menu-action__sigil {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .menu-action__copy strong {
+    font-size: 14px;
+  }
+
+  .menu-action__copy small {
+    font-size: 9px;
+  }
+
+  .profile-panel {
+    padding: 18px 14px 14px;
+  }
+
+  .origin-grid .origin-card__quote {
+    display: none;
+  }
+
+  .map-board {
+    min-height: max(460px, calc(var(--map-layers, 7) * 58px));
+  }
+
+  .map-legend {
+    gap: 6px 10px;
+  }
+
+  .map-node__disc {
+    width: 38px;
+    height: 38px;
+  }
+
+  .map-node--boss .map-node__disc {
+    width: 52px;
+    height: 52px;
+  }
+
+  .map-node__label {
+    display: none;
+  }
+
+  .map-board__start,
+  .map-board__boss-label {
+    font-size: 7px;
+  }
+
+  .run-rail__stats strong {
+    font-size: 14px;
+  }
+
+  .run-rail__deck {
+    padding: 7px 8px;
+  }
+
+  .run-rail__deck span strong {
+    font-size: 10px;
+  }
+
+  .sandbox-hero__meta {
+    flex-wrap: wrap;
+  }
+
+  .sandbox-hero__meta .stat-divider {
+    display: none;
+  }
+
+  .sandbox-deck__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .trial-enemy__actions {
+    flex-wrap: wrap;
+  }
+
+  .trial-enemy__actions .button {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .deck-pool__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pagebar__actions .text-button,
+  .pagebar__actions .button--ghost {
+    display: none;
+  }
+
+  .pagebar__back {
+    padding-right: 6px;
+  }
+
+  .pagebar__back span {
+    display: none;
+  }
+
+  .pagebar__actions {
+    gap: 6px;
+  }
+
+  .header-resource {
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .battle-header .pagebar__back span {
+    display: none;
+  }
+
+  .enemy-figure {
+    max-width: 142px;
+  }
+
+  .player-name-row > span:not(.combat-block) {
+    display: none;
+  }
+
+  .hand .hand-card {
+    flex: 0 0 96px;
+    width: 96px;
+  }
+
+  .pile-counts svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .result-panel {
+    padding: 20px 12px;
+  }
+
+  .result-panel h2 {
+    font-size: clamp(26px, 9vw, 34px);
+  }
+
+  .result-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 12px 4px;
+  }
+
+  .shop-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .glyph-picker {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal__footer .button,
+  .modal__footer .text-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .editor-footer-left {
+    justify-content: center;
+  }
+
+  .modal__heading p {
+    display: none;
+  }
+
+  .ending-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ending-stat:last-child {
+    grid-column: auto;
+  }
+
+  .ending-stat:nth-child(2) {
+    border-top: 1px solid var(--line-faint);
+  }
+}
+
+@media (max-height: 760px) and (min-width: 981px) {
+  .battle-screen {
+    min-height: 560px;
+  }
+
+  .enemy-figure {
+    max-width: 260px;
+  }
+
+  .enemy-meta h1 {
+    font-size: clamp(30px, 3.6vw, 46px);
+  }
+
+  .enemy-quote {
+    margin-top: 10px;
+  }
+
+  .hand .hand-card {
+    flex-basis: clamp(104px, 9.4vw, 128px);
+    width: clamp(104px, 9.4vw, 128px);
+  }
+
+  .menu-layout {
+    padding-top: 26px;
+    padding-bottom: 38px;
+  }
+}
+
+/* Relic rite & boss phase on narrower screens */
+
+@media (max-width: 1024px) {
+  .relic-awakening {
+    top: 56px;
+    width: calc(100vw - 28px);
+    padding: 12px 14px 14px;
+  }
+
+  .relic-awakening__grid {
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+    max-height: min(34vh, 260px);
+  }
+
+  .rite-item__copy small {
+    display: none;
+  }
+
+  .boss-phase__title {
+    font-size: clamp(30px, 7vw, 56px);
+  }
+
+  .relic-gain-layer {
+    top: auto;
+    right: auto;
+    bottom: 82px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .relic-gain {
+    width: min(360px, calc(100vw - 24px));
+    transform: translateY(18px) scale(0.98);
+  }
+
+  .relic-gain-layer.is-lit .relic-gain {
+    transform: translateY(0) scale(1);
+  }
+
+  .relic-gain-layer.is-out .relic-gain {
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@media (max-width: 640px) {
+  .relic-awakening {
+    top: 52px;
+    padding: 10px 11px 12px;
+  }
+
+  .relic-awakening__head > small {
+    display: none;
+  }
+
+  .relic-awakening__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+
+  .rite-item {
+    padding: 6px;
+  }
+
+  .rite-item__glyph {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+    font-size: 11px;
+  }
+
+  .rite-item__halo {
+    left: 19px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .rite-item__ring {
+    left: 19px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .rite-item__copy strong {
+    font-size: 9.5px;
+  }
+
+  .boss-phase {
+    padding: 18px;
+  }
+
+  .boss-phase__title {
+    font-size: clamp(28px, 9.4vw, 44px);
+    letter-spacing: 0.1em;
+  }
+
+  .boss-phase__copy p {
+    font-size: 10.5px;
+    line-height: 1.8;
+  }
+
+  .boss-phase__thread {
+    left: 2%;
+    right: 2%;
+  }
+
+  .battle-phase-flag {
+    display: none;
+  }
+
+  .reward-relic-chip__copy {
+    max-width: 54vw;
+  }
+}
+
+/* Image editor on narrower screens */
+
+@media (max-width: 980px) {
+  .image-editor {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .image-editor__left {
+    width: min(560px, 100%);
+    margin: 0 auto;
+  }
+
+  .image-editor__controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .image-editor__error {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal--image-editor .modal__footer {
+    justify-content: center;
+  }
+
+  .modal--image-editor .editor-footer-left {
+    display: none;
+  }
+
+  .modal--image-editor .editor-footer-right {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .modal--image-editor .editor-footer-right .button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .image-editor__controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .image-editor__meta {
+    font-size: 8px;
+    gap: 6px 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .keyword-grid {
+    grid-template-columns: repeat(auto-fill, minmax(218px, 1fr));
+  }
+
+  .achievement-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .achievement-top {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .ascension-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ascension-detail {
+    flex-wrap: wrap;
+  }
+
+  .ascension-detail__best {
+    flex: 1 1 100%;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+    margin-left: 0;
+    white-space: normal;
+  }
+
+  .keyword-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .achievement-top__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .backup-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px 8px;
+  }
+
+  .pile-modal__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .achievement-card__title {
+    flex-wrap: wrap;
+    gap: 2px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boss-phase,
+  .boss-phase__copy,
+  .boss-phase__sigil,
+  .boss-phase__thread,
+  .boss-phase__flash,
+  .rite-item,
+  .relic-gain,
+  .relic-chip.is-awake,
+  .header-relics .relic-chip.is-awake .relic-chip__glyph {
+    animation: none !important;
+  }
+
+  .boss-phase.is-lit .boss-phase__copy,
+  .boss-phase.is-lit .boss-phase__sigil {
+    opacity: 1;
+    transform: none;
+  }
+
+  .boss-phase.is-lit .boss-phase__thread {
+    opacity: 0.55;
+    transform: none;
+  }
+
+  .relic-awakening.is-lit .rite-item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .relic-awakening,
+  .relic-gain-layer .relic-gain {
+    transition: none;
+  }
+}

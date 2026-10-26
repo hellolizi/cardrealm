@@ -1,0 +1,86 @@
+[
+  {
+    "id": "crossGuard",
+    "name": "交刃",
+    "school": "blade",
+    "rarity": "common",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"交刃\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 造成 5 点伤害。 获得 7 点格挡。. Key visual elements: a decisive blade arc and flying sparks, a translucent shield of light. Scene concept: 挡下这一刀，顺便还你一刀。. School motif: 剑势; palette accents: steel, crimson cloth and sharp golden light. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "tideAegis",
+    "name": "潮盾",
+    "school": "star",
+    "rarity": "common",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"潮盾\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 9 点格挡。 造成 4 点伤害。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks. Scene concept: 浪打上来的时候，它替你挨了一下。. School motif: 星辉; palette accents: cold starlight, silver constellations and drifting motes. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "thornRiposte",
+    "name": "棘刺回礼",
+    "school": "thorn",
+    "rarity": "uncommon",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"棘刺回礼\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 6 点格挡。 获得 3 层荆棘。 造成 4 点伤害。. Key visual elements: a translucent shield of light, thorned vines and brambles, a decisive blade arc and flying sparks. Scene concept: 你碰到它的时候，它也碰到了你。. School motif: 荆棘; palette accents: thorned brambles, bark and pale blooms. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "venomWard",
+    "name": "毒障",
+    "school": "shadow",
+    "rarity": "uncommon",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"毒障\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 7 点格挡。 使敌人获得 3 层中毒。. Key visual elements: a translucent shield of light, creeping green venom mist. Scene concept: 雾里有毒，墙里也有。. School motif: 蚀影; palette accents: venom-green mist, dark leaves and hidden blades. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "emberBulwark",
+    "name": "余烬壁垒",
+    "school": "ember",
+    "rarity": "uncommon",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"余烬壁垒\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 14 点格挡。 造成 7 点伤害。 使敌人获得 2 层灼烧。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks, flames licking upward. Scene concept: 烧过的东西，比没烧过的更硬。. School motif: 烬火; palette accents: ember flames, ash and warm orange sparks. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "mirrorParry",
+    "name": "镜像招架",
+    "school": "thorn",
+    "rarity": "uncommon",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"镜像招架\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 8 点格挡。 造成 5 点伤害。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks. Scene concept: 它砍的是镜子，疼的是它自己。. School motif: 荆棘; palette accents: thorned brambles, bark and pale blooms. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "starBastion",
+    "name": "星垒",
+    "school": "star",
+    "rarity": "rare",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"星垒\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 18 点格挡。 造成 6 点伤害。 抽 1 张牌。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks, floating cards and drifting pages. Scene concept: 整片夜空弯下来，替你挡了一次。. School motif: 星辉; palette accents: cold starlight, silver constellations and drifting motes. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "dreamParry",
+    "name": "梦的回手",
+    "school": "dream",
+    "rarity": "uncommon",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"梦的回手\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 6 点格挡。 造成 6 点伤害。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks. Scene concept: 梦里挨的打不会疼，但会还回去。. School motif: 遗梦; palette accents: violet dreamlight, floating pages and broken mirrors. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "bloodWard",
+    "name": "血誓之盾",
+    "school": "ember",
+    "rarity": "rare",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"血誓之盾\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 失去 3 点生命。 获得 16 点格挡。 造成 6 点伤害。. Key visual elements: a blood sacrifice and crimson droplets, a translucent shield of light, a decisive blade arc and flying sparks. Scene concept: 用一点血，换一整面墙。. School motif: 烬火; palette accents: ember flames, ash and warm orange sparks. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "shadowVeil",
+    "name": "影袭",
+    "school": "shadow",
+    "rarity": "rare",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"影袭\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 10 点格挡。 造成 5 点伤害 2 次。 使敌人获得 1 层虚弱。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks, fading strength and drooping shadows. Scene concept: 你数不清它出了几次手。. School motif: 蚀影; palette accents: venom-green mist, dark leaves and hidden blades. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "ironTempo",
+    "name": "铁律",
+    "school": "blade",
+    "rarity": "rare",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"铁律\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 造成 9 点伤害。 获得 12 点格挡。 获得 1 层敏捷。. Key visual elements: a decisive blade arc and flying sparks, a translucent shield of light, flowing wind and nimble motion. Scene concept: 一攻一守，节奏在自己手里。. School motif: 剑势; palette accents: steel, crimson cloth and sharp golden light. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  },
+  {
+    "id": "lastBastion",
+    "name": "最后一道",
+    "school": "thorn",
+    "rarity": "rare",
+    "prompt": "Horizontal 4:3 collectible card game illustration. The card is named \"最后一道\", so the picture must clearly show that action or object as the focal point, not a generic warrior portrait. Card effect: 获得 20 点格挡。 造成 8 点伤害。. Key visual elements: a translucent shield of light, a decisive blade arc and flying sparks. Scene concept: 墙后没有退路，所以墙不能倒。. School motif: 荆棘; palette accents: thorned brambles, bark and pale blooms. dark fantasy trading card game illustration, painterly, dramatic chiaroscuro lighting, deep plum and antique gold palette, rich texture, atmospheric, intricate ornate details. Cinematic wide composition, no text, no letters, no watermark, no logo, no border, no card frame, no UI."
+  }
+]

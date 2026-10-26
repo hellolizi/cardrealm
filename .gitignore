@@ -1,0 +1,20 @@
+# 构建产物
+dist/
+desktop/bin/
+desktop/obj/
+*.zip
+*.tar.gz
+*.sha256
+
+# 出图源文件、本地 QA 截图、编辑器缓存（体积大）
+art-source/
+vibe_images/
+.qa/
+.trae/
+.workbuddy/
+
+# 本机杂项
+*.lnk
+.DS_Store
+Thumbs.db
+node_modules/

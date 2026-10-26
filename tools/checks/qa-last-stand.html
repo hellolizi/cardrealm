@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>QA setup</title>
+<script type="module">
+  const E = await import('/js/engine.js');
+  const S = await import('/js/state.js');
+  const { G } = S;
+  E.startAdventure('blade', 'corridor', { seed: 'qa-last-stand' });
+  const node = G.run.map.flat().find((n) => n.type === 'battle');
+  const battle = E.startAdventureBattle(node);
+  battle.enemy.pattern = [0];
+  battle.enemy.moveIndex = 0;
+  battle.parleySkip = true;
+  battle.player.hp = Math.ceil(battle.player.maxHp * 0.25);
+  battle.player.block = 999;
+  E.endTurn(battle);
+  G.screen = 'battle';
+  S.saveRunNow();
+  document.title = `ready ${battle.lastStand?.offered}`;
+  location.replace('/');
+</script>

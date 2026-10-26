@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>sim</title></head>
+<body>
+<script type="module">
+import { G } from '/js/state.js';
+import { startSandboxBattle, playCard, endTurn, getBattleCard, getIntent } from '/js/engine.js';
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** 梦蚀（与 engine.js 的 enemyPressure 保持一致） */
+const pressureNow = (battle) => {
+  const t = Number(battle.turn) || 1;
+  return t < 4 ? 0 : Math.min(4, Math.floor((t - 2) / 2));
+};
+
+/** 敌方这回合会打多少 */
+function incomingOf(battle) {
+  const move = getIntent(battle);
+  if (!move || !move.damage) return 0;
+  const hits = Math.max(1, Number(move.hits) || 1);
+  const bonus = Number(battle.enemy.damageBonus) || 0;
+  return ((Number(move.damage) || 0) + bonus) * hits + pressureNow(battle);
+}
+
+const blockOf = (def) =>
+  (def.effects || []).filter((e) => e.type === 'block').reduce((s, e) => s + (Number(e.amount) || 0), 0);
+
+/** 覆盖所有会产伤害的 effect 类型，避免把 execute / directDamage / blockDamage 当成 0 伤 */
+function dmgOf(def) {
+  let total = 0;
+  for (const e of def.effects || []) {
+    const amount = Number(e.amount) || 0;
+    if (e.type === 'damage') total += amount * Math.max(1, Number(e.hits) || 1);
+    else if (e.type === 'execute') total += amount;
+    else if (e.type === 'directDamage') total += amount;
+    else if (e.type === 'blockDamage') total += amount;
+  }
+  return total;
+}
+
+/**
+ * 保命 bot：
+ * 1. 先估这回合缺口（受击 − 已有格挡）；
+ * 2. 只有掉血会超过当前生命 30% 或直接致死时，才花能量格挡；
+ * 3. 其余能量全部换成伤害（按 伤害/费用 排序）；
+ * 4. 都没得打时抽牌 / 上状态。
+ */
+function playTurn(battle) {
+  const incoming = incomingOf(battle);
+  const lethal = incoming >= battle.player.hp;
+  const painful = incoming - battle.player.block >= battle.player.hp * 0.3;
+
+  for (let step = 0; step < 30; step += 1) {
+    const options = battle.hand
+      .map((inst) => ({ inst, def: getBattleCard(inst, battle) }))
+      .filter(({ def }) => def && def.cost <= battle.player.energy);
+    if (!options.length) break;
+
+    const stillNeed = Math.max(0, incoming - battle.player.block);
+    let pick = null;
+
+    if ((lethal || painful) && stillNeed > 0) {
+      const guards = options.filter(({ def }) => blockOf(def) > 0);
+      if (guards.length) {
+        guards.sort((a, b) => blockOf(b.def) / Math.max(1, b.def.cost) - blockOf(a.def) / Math.max(1, a.def.cost));
+        pick = guards[0];
+      }
+    }
+
+    if (!pick) {
+      const attacks = options.filter(({ def }) => dmgOf(def) > 0);
+      if (attacks.length) {
+        attacks.sort((a, b) => dmgOf(b.def) / Math.max(1, b.def.cost) - dmgOf(a.def) / Math.max(1, a.def.cost));
+        pick = attacks[0];
+      }
+    }
+
+    if (!pick) {
+      const util = options
+        .slice()
+        .sort((a, b) => (dmgOf(b.def) + blockOf(b.def)) - (dmgOf(a.def) + blockOf(a.def)));
+      pick = util[0];
+    }
+
+    const res = playCard(battle, pick.inst.uid);
+    if (!res?.ok) break;
+  }
+}
+
+async function runOne(deck, enemyId) {
+  G.profile.sandboxDeck = deck.slice();
+  const battle = startSandboxBattle(enemyId);
+  if (!battle || battle.error) return { error: battle?.error || 'no battle' };
+  let guard = 0;
+  while (battle.phase === 'player' && guard < 60) {
+    guard += 1;
+    playTurn(battle);
+    if (battle.phase !== 'player') break;
+    endTurn(battle);
+    await sleep(0);
+  }
+  return {
+    win: battle.phase === 'victory',
+    turns: battle.turn,
+    hp: battle.player.hp,
+    maxHp: battle.player.maxHp,
+    resonance: battle.resonance?.primary,
+    secondary: battle.resonance?.secondary?.id || null,
+  };
+}
+
+/**
+ * window.simulate(deck, enemyId, runs)
+ * 返回胜率 / 平均回合 / 通关残血比
+ */
+window.simulate = async (deck, enemyId = 'shadow-knight', runs = 30) => {
+  const out = [];
+  for (let i = 0; i < runs; i += 1) out.push(await runOne(deck, enemyId));
+  const wins = out.filter((r) => r.win);
+  const avg = (arr) => (arr.length ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1) : '-');
+  return {
+    runs,
+    winRate: Math.round((wins.length / runs) * 100),
+    avgTurns: avg(wins.map((r) => r.turns)),
+    avgHpPct: avg(wins.map((r) => (r.maxHp ? Math.round((r.hp / r.maxHp) * 100) : r.hp))),
+    resonance: out[0]?.resonance || null,
+    secondary: out[0]?.secondary || null,
+    errors: out.filter((r) => r.error).length,
+  };
+};
+window.simReady = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+/* ============================================================
+   牌境 · 活画层（Live Art）
+   AI 静图 + 多层动效，让卡面与立绘“呼吸”起来。
+   强化（+）后切换到更强的动势：光晕流动、扫光、金边脉冲。
+   全部使用 transform / opacity / filter，交给合成层，不阻塞布局。
+   ============================================================ */
+
+@property --live-mx {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 32%;
+}
+
+@property --live-my {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 38%;
+}
+
+.live-art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+  background: #080611;
+  backface-visibility: hidden;
+  contain: paint;
+}
+
+.live-art__base,
+.live-art__bloom {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* —— 底层：极缓慢的呼吸与轻微漂移 —— */
+.live-art__base {
+  z-index: 1;
+  transform-origin: 50% 45%;
+  animation: liveBreathe 13s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* —— 光晕层：同一张图的模糊副本，screen 叠加成环境光 —— */
+.live-art__bloom {
+  --bloom-opacity: 0.12;
+  z-index: 2;
+  filter: blur(16px) saturate(1.25) brightness(1.04);
+  mix-blend-mode: screen;
+  opacity: var(--bloom-opacity);
+  transform: scale(1.1);
+  transform-origin: 50% 50%;
+  animation: liveBloomPulse 13s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* —— 浮尘 / 光点 —— */
+.live-art__motes {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.live-art__motes i {
+  position: absolute;
+  left: var(--x, 50%);
+  bottom: -10%;
+  width: var(--s, 3px);
+  height: var(--s, 3px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 243, 214, 0.95) 0%, rgba(255, 226, 168, 0.45) 42%, transparent 72%);
+  opacity: 0;
+  animation: liveMote var(--dur, 11s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+/* —— 斜向扫光 —— */
+.live-art__sweep {
+  position: absolute;
+  inset: -25%;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    104deg,
+    transparent 38%,
+    rgba(255, 246, 222, 0.14) 47%,
+    rgba(255, 255, 255, 0.05) 51%,
+    transparent 61%
+  );
+  transform: translate3d(-72%, 0, 0);
+  opacity: 0;
+}
+
+/* —— 内描边 —— */
+.live-art__rim {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(226, 196, 138, 0.16),
+    inset 0 0 18px rgba(212, 176, 113, 0.1);
+}
+
+/* ============================================================
+   强化态：真正“动起来”
+   ============================================================ */
+
+.live-art.is-upgraded .live-art__base {
+  animation-duration: 8s;
+  filter: saturate(1.1) contrast(1.03) brightness(1.02);
+}
+
+.live-art.is-upgraded .live-art__bloom {
+  --bloom-opacity: 0.36;
+  filter: blur(11px) saturate(1.55) brightness(1.16);
+  -webkit-mask-image: radial-gradient(56% 52% at var(--live-mx) var(--live-my), #000 0%, rgba(0, 0, 0, 0.55) 46%, transparent 76%);
+  mask-image: radial-gradient(56% 52% at var(--live-mx) var(--live-my), #000 0%, rgba(0, 0, 0, 0.55) 46%, transparent 76%);
+  animation:
+    liveBloomPulse 6.4s ease-in-out infinite,
+    liveCaustic 11s ease-in-out infinite;
+}
+
+.live-art.is-upgraded .live-art__sweep {
+  opacity: 1;
+  animation: liveSweep 6.8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.live-art.is-upgraded .live-art__rim {
+  animation: liveRim 4.6s ease-in-out infinite;
+}
+
+.live-art.is-upgraded .live-art__motes {
+  mix-blend-mode: screen;
+}
+
+/* 强化后光点更多、更亮：伪元素补三颗 */
+.live-art.is-upgraded .live-art__motes::before,
+.live-art.is-upgraded .live-art__motes::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 186, 1) 0%, rgba(255, 208, 130, 0.4) 45%, transparent 72%);
+  animation: liveMote 9.5s linear infinite;
+}
+
+.live-art.is-upgraded .live-art__motes::before {
+  left: 22%;
+  --drift: 14px;
+  animation-delay: -3s;
+}
+
+.live-art.is-upgraded .live-art__motes::after {
+  left: 78%;
+  --drift: -18px;
+  animation-delay: -7.4s;
+}
+
+/* ============================================================
+   视频层（真正的 AI 动态循环，存在时覆盖静图）
+   ============================================================ */
+
+.live-art__video {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* ============================================================
+   场景变体
+   ============================================================ */
+
+/* 卡面：横向裁切，轻微放大避免呼吸时露出边缘 */
+.game-card__art .live-art {
+  position: absolute;
+  inset: 0;
+}
+
+.game-card__art .live-art__base {
+  object-position: center;
+  transform-origin: 50% 42%;
+}
+
+/* 小画幅里模糊半径要收小，否则整块发灰 */
+.game-card__art .live-art__bloom {
+  filter: blur(6px) saturate(1.16) brightness(0.98);
+}
+
+.game-card__art .live-art.is-upgraded .live-art__bloom {
+  filter: blur(4px) saturate(1.5) brightness(1.12);
+}
+
+/* 强化态在卡面小尺寸下也要一眼看出来 */
+.game-card[data-upgraded="true"] .game-card__art {
+  border-color: rgba(230, 192, 122, 0.44);
+  box-shadow:
+    inset 0 0 22px rgba(255, 206, 120, 0.16),
+    0 0 18px rgba(206, 158, 68, 0.14);
+}
+
+.game-card[data-upgraded="true"] .game-card__name {
+  color: #f2dda9;
+  text-shadow: 0 0 12px rgba(240, 200, 120, 0.34);
+}
+
+.game-card:hover .live-art.is-upgraded .live-art__bloom {
+  --bloom-opacity: 0.5;
+}
+
+/* 小尺寸卡（牌堆预览等）省掉浮尘与扫光 */
+.game-card--mini .live-art__motes,
+.game-card--mini .live-art__sweep,
+.game-card--mini .live-art__bloom {
+  display: none;
+}
+
+/* 造物工坊一次铺 100 张缩略图，只留底图，避免上百个动画层同时跑 */
+.artforge-tile .live-art__motes,
+.artforge-tile .live-art__sweep,
+.artforge-tile .live-art__bloom {
+  display: none;
+}
+
+.artforge-tile .live-art__base {
+  animation: none;
+}
+
+/* 立绘：纵向构图，呼吸幅度更大一点 */
+.live-art--portrait .live-art__base {
+  object-position: center 18%;
+  animation-name: liveBreatheTall;
+  animation-duration: 14s;
+}
+
+.live-art--portrait.is-upgraded .live-art__base {
+  animation-duration: 8.5s;
+}
+
+.live-art--portrait .live-art__motes i {
+  width: calc(var(--s, 3px) * 1.35);
+  height: calc(var(--s, 3px) * 1.35);
+}
+
+/* 大图详情页 */
+.live-art--hero .live-art__base {
+  animation-duration: 16s;
+}
+
+/* ============================================================
+   关键帧
+   ============================================================ */
+
+@keyframes liveBreathe {
+  0% {
+    transform: translate3d(-0.7%, 0.5%, 0) scale(1.035);
+  }
+  36% {
+    transform: translate3d(0.6%, -0.6%, 0) scale(1.062);
+  }
+  72% {
+    transform: translate3d(0.9%, 0.4%, 0) scale(1.044);
+  }
+  100% {
+    transform: translate3d(-0.7%, 0.5%, 0) scale(1.035);
+  }
+}
+
+@keyframes liveBreatheTall {
+  0% {
+    transform: translate3d(0, 0.6%, 0) scale(1.02);
+  }
+  40% {
+    transform: translate3d(0.5%, -0.9%, 0) scale(1.05);
+  }
+  76% {
+    transform: translate3d(-0.6%, 0.3%, 0) scale(1.032);
+  }
+  100% {
+    transform: translate3d(0, 0.6%, 0) scale(1.02);
+  }
+}
+
+@keyframes liveBloomPulse {
+  0%,
+  100% {
+    opacity: calc(var(--bloom-opacity, 0.12) * 0.55);
+    transform: scale(1.08);
+  }
+  50% {
+    opacity: var(--bloom-opacity, 0.12);
+    transform: scale(1.15);
+  }
+}
+
+@keyframes liveMote {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  14% {
+    opacity: var(--peak, 0.5);
+  }
+  70% {
+    opacity: calc(var(--peak, 0.5) * 0.7);
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), -128%, 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes liveCaustic {
+  0%,
+  100% {
+    --live-mx: 26%;
+    --live-my: 64%;
+  }
+  50% {
+    --live-mx: 74%;
+    --live-my: 28%;
+  }
+}
+
+@keyframes liveSweep {
+  0%,
+  14% {
+    transform: translate3d(-72%, 0, 0);
+  }
+  62%,
+  100% {
+    transform: translate3d(72%, 0, 0);
+  }
+}
+
+@keyframes liveRim {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 1px rgba(226, 196, 138, 0.2),
+      inset 0 0 16px rgba(212, 176, 113, 0.12);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 232, 172, 0.56),
+      inset 0 0 26px rgba(255, 214, 130, 0.24);
+  }
+}
+
+/* ============================================================
+   降级 / 省电
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .live-art__base,
+  .live-art__bloom,
+  .live-art__motes,
+  .live-art__sweep,
+  .live-art__rim,
+  .live-art__motes::before,
+  .live-art__motes::after {
+    animation: none !important;
+  }
+
+  .live-art__motes,
+  .live-art__sweep {
+    display: none;
+  }
+}
+
+html[data-motion="calm"] .live-art__motes,
+html[data-motion="calm"] .live-art__sweep,
+html[data-motion="calm"] .live-art__bloom {
+  display: none;
+}
+
+html[data-motion="calm"] .live-art__base {
+  animation: none;
+}

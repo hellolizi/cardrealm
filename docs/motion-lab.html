@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-motion="live">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>牌境 · 活画试片室</title>
+<link rel="stylesheet" href="../css/live-art.css">
+<style>
+  :root {
+    --ink: #0a070e;
+    --text: #ece4d7;
+    --muted: #a99f92;
+    --faint: #756b60;
+    --gold: #d2af74;
+    --line: rgba(218, 197, 160, 0.14);
+    --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+    --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 46px clamp(20px, 5vw, 72px) 90px;
+    background:
+      radial-gradient(120% 80% at 50% -20%, #1d1529 0%, transparent 62%),
+      radial-gradient(80% 60% at 90% 110%, #221826 0%, transparent 60%),
+      var(--ink);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+  }
+  header { max-width: 1180px; margin: 0 auto 34px; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--faint); }
+  h1 { margin: 10px 0 8px; font-family: var(--serif); font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: 0.06em; }
+  .lede { margin: 0; max-width: 660px; color: var(--muted); line-height: 1.85; font-size: 14px; }
+  .lede b { color: var(--gold); font-weight: 500; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  .toggle {
+    border: 1px solid var(--line);
+    background: rgba(22, 17, 28, 0.72);
+    color: var(--muted);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    padding: 9px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.25s ease;
+  }
+  .toggle:hover { color: var(--text); border-color: rgba(218, 197, 160, 0.34); }
+  .toggle.is-on { color: #171018; background: linear-gradient(150deg, #e8cf9d, #c9a76b); border-color: transparent; }
+
+  section { max-width: 1180px; margin: 0 auto 50px; }
+  .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
+  .section-head h2 { margin: 0; font-family: var(--serif); font-size: 17px; font-weight: 500; letter-spacing: 0.14em; }
+  .section-head span { font-size: 12px; color: var(--faint); letter-spacing: 0.08em; }
+
+  .row { display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-start; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; max-width: 860px; }
+
+  /* ---------- 卡面 ---------- */
+  .card {
+    width: 100%;
+    padding: 9px 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: linear-gradient(168deg, rgba(38, 29, 48, 0.9), rgba(13, 10, 18, 0.96));
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.22, 0.68, 0, 1), box-shadow 0.6s ease;
+  }
+  .card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 34px 66px rgba(0, 0, 0, 0.6); }
+  .card.is-up { border-color: rgba(226, 186, 112, 0.42); box-shadow: 0 24px 54px rgba(120, 82, 20, 0.22); }
+  .card__art {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 7px 7px 4px 4px;
+    border: 1px solid rgba(218, 197, 160, 0.16);
+    background: #080611;
+  }
+  .card__art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(5, 3, 9, 0.32), transparent 30%, transparent 58%, rgba(5, 3, 9, 0.62)),
+      linear-gradient(90deg, rgba(5, 3, 9, 0.42), transparent 42%);
+  }
+  .card__school {
+    position: absolute;
+    left: 9px;
+    bottom: 7px;
+    z-index: 8;
+    font-family: var(--serif);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    color: color-mix(in srgb, var(--school) 72%, #f1e7d6);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+  .card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 4px 8px;
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+  .card__cost {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--school) 55%, rgba(226, 186, 112, 0.4));
+    color: color-mix(in srgb, var(--school) 50%, #f3e3c1);
+    font-size: 12px;
+  }
+  .card__rarity { color: var(--faint); font-size: 10px; letter-spacing: 0.26em; }
+  .card__rule { height: 1px; margin: 0 4px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+  .card__desc { margin: 0; padding: 9px 4px 0; font-size: 12.5px; line-height: 1.7; color: var(--muted); min-height: 42px; }
+  .card__tag {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    z-index: 9;
+    padding: 4px 10px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: #1a1220;
+    background: linear-gradient(140deg, #f0d9a8, #c9a76b);
+    border-radius: 2px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ---------- 立绘 ---------- */
+  .figure { width: 234px; text-align: center; }
+  .figure__frame {
+    position: relative;
+    aspect-ratio: 0.68;
+    overflow: hidden;
+    border-radius: 46% 46% 8px 8px / 27% 27% 8px 8px;
+    border: 1px solid rgba(218, 197, 160, 0.26);
+    background: #08060c;
+    box-shadow: 0 30px 62px rgba(0, 0, 0, 0.62), 0 0 0 7px rgba(7, 5, 11, 0.52);
+  }
+  .figure__frame .live-art { -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%); }
+  .figure__caption { margin-top: 12px; font-size: 12px; letter-spacing: 0.16em; color: var(--faint); }
+  .figure__caption b { display: block; margin-bottom: 4px; font-family: var(--serif); font-size: 15px; font-weight: 500; letter-spacing: 0.12em; color: var(--text); }
+
+  .sheet {
+    display: block;
+    width: 100%;
+    max-width: 1180px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .note {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    color: var(--faint);
+    font-size: 12.5px;
+    line-height: 1.9;
+  }
+  .note b { color: var(--muted); font-weight: 500; }
+  code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">CARD REALM · LIVE ART LAB</div>
+  <h1>活画试片室</h1>
+  <p class="lede">100 张卡面全部换成了 AI 插画，每一张都按卡名与效果来画——<b>裂空斩</b>是裂开空气的一刀，<b>坠星</b>是塌下来的夜色，<b>淬毒</b>是刀刃上的绿雾，<b>燎原</b>是无声卷曲的梦原，<b>棘冠</b>是悬在祭坛上的荆环，<b>无名残页</b>是烧掉名字的半页纸。强化之后，同一张图会换一套动势：呼吸变快、光晕流动、扫光与金边一起醒来。</p>
+  <div class="toolbar">
+    <button class="toggle is-on" data-toggle="live">动态开启</button>
+    <button class="toggle" data-toggle="calm">减少动效</button>
+  </div>
+</header>
+
+<section>
+  <div class="section-head"><h2>首批样张</h2><span>六张 · 画面按卡名与效果来画</span></div>
+  <div class="grid">
+
+    <article class="card" style="--school:#c06653">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/sunder.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/sunder.webp" alt="">
+          <span class="live-art__motes"><i style="--x:16%;--s:2.6px;--dur:11.4s;--delay:-2.8s;--drift:14px;--peak:.48"></i><i style="--x:34%;--s:3.2px;--dur:13.2s;--delay:-7.4s;--drift:-16px;--peak:.36"></i><i style="--x:58%;--s:2.1px;--dur:9.6s;--delay:-1.2s;--drift:20px;--peak:.56"></i><i style="--x:76%;--s:3.5px;--dur:12.8s;--delay:-5.9s;--drift:-12px;--peak:.3"></i><i style="--x:91%;--s:2.4px;--dur:14.6s;--delay:-10.7s;--drift:17px;--peak:.42"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">剑势 · BLADE</span>
+      </div>
+      <div class="card__top"><span class="card__cost">2</span><span>裂空斩</span><span class="card__rarity">UNCOMMON</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">造成 12 点伤害，施加 1 层易伤。</p>
+    </article>
+
+    <article class="card" style="--school:#7f9bd0">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/nova.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/nova.webp" alt="">
+          <span class="live-art__motes"><i style="--x:22%;--s:3px;--dur:12.6s;--delay:-4.4s;--drift:12px;--peak:.5"></i><i style="--x:41%;--s:2.3px;--dur:10.8s;--delay:-8.1s;--drift:-19px;--peak:.34"></i><i style="--x:63%;--s:3.6px;--dur:14.2s;--delay:-2.3s;--drift:21px;--peak:.6"></i><i style="--x:79%;--s:2.5px;--dur:11.8s;--delay:-6.8s;--drift:-9px;--peak:.38"></i><i style="--x:88%;--s:2px;--dur:15.4s;--delay:-11.9s;--drift:15px;--peak:.28"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">星辉 · STAR</span>
+      </div>
+      <div class="card__top"><span class="card__cost">2</span><span>坠星</span><span class="card__rarity">RARE</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">造成 14 点伤害，施加 1 层虚弱。</p>
+    </article>
+
+    <article class="card" style="--school:#8d9b70">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/envenom.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/envenom.webp" alt="">
+          <span class="live-art__motes"><i style="--x:14%;--s:2.8px;--dur:10.4s;--delay:-3.6s;--drift:16px;--peak:.52"></i><i style="--x:31%;--s:2.2px;--dur:13.8s;--delay:-9.2s;--drift:-14px;--peak:.32"></i><i style="--x:54%;--s:3.4px;--dur:11.2s;--delay:-1.8s;--drift:22px;--peak:.58"></i><i style="--x:72%;--s:2.6px;--dur:14.8s;--delay:-7.6s;--drift:-11px;--peak:.36"></i><i style="--x:93%;--s:2px;--dur:12.4s;--delay:-10.2s;--drift:13px;--peak:.3"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">蚀影 · SHADE</span>
+      </div>
+      <div class="card__top"><span class="card__cost">1</span><span>淬毒</span><span class="card__rarity">UNCOMMON</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">造成 3 点伤害，施加 4 层中毒。</p>
+    </article>
+
+    <article class="card" style="--school:#d08a5a">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/wildfire.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/wildfire.webp" alt="">
+          <span class="live-art__motes"><i style="--x:19%;--s:3.2px;--dur:11.8s;--delay:-5.1s;--drift:11px;--peak:.55"></i><i style="--x:38%;--s:2.4px;--dur:9.4s;--delay:-2.2s;--drift:-17px;--peak:.4"></i><i style="--x:59%;--s:3.8px;--dur:13.6s;--delay:-8.5s;--drift:23px;--peak:.62"></i><i style="--x:74%;--s:2.2px;--dur:15.2s;--delay:-11.3s;--drift:-13px;--peak:.32"></i><i style="--x:90%;--s:2.9px;--dur:10.6s;--delay:-6.2s;--drift:18px;--peak:.45"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">烬火 · EMBER</span>
+      </div>
+      <div class="card__top"><span class="card__cost">2</span><span>燎原</span><span class="card__rarity">UNCOMMON</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">施加 9 层灼烧。</p>
+    </article>
+
+    <article class="card" style="--school:#a88968">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/briarCrown.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/briarCrown.webp" alt="">
+          <span class="live-art__motes"><i style="--x:24%;--s:2.7px;--dur:12.8s;--delay:-4.9s;--drift:15px;--peak:.46"></i><i style="--x:43%;--s:3.1px;--dur:10.2s;--delay:-7.1s;--drift:-18px;--peak:.5"></i><i style="--x:61%;--s:2.2px;--dur:14.4s;--delay:-1.6s;--drift:12px;--peak:.34"></i><i style="--x:78%;--s:3.6px;--dur:11.6s;--delay:-9.4s;--drift:-21px;--peak:.58"></i><i style="--x:86%;--s:2.4px;--dur:13.1s;--delay:-5.7s;--drift:19px;--peak:.36"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">荆棘 · THORN</span>
+      </div>
+      <div class="card__top"><span class="card__cost">2</span><span>棘冠</span><span class="card__rarity">RARE</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">获得 8 点格挡，施加 5 层荆棘。</p>
+    </article>
+
+    <article class="card" style="--school:#8d9b70">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/tornPage.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/tornPage.webp" alt="">
+          <span class="live-art__motes"><i style="--x:17%;--s:3.1px;--dur:13.4s;--delay:-3.3s;--drift:13px;--peak:.44"></i><i style="--x:36%;--s:2.3px;--dur:11.1s;--delay:-8.8s;--drift:-15px;--peak:.36"></i><i style="--x:55%;--s:3.7px;--dur:15.2s;--delay:-1.1s;--drift:24px;--peak:.6"></i><i style="--x:71%;--s:2.5px;--dur:10.6s;--delay:-6.6s;--drift:-12px;--peak:.4"></i><i style="--x:88%;--s:2.1px;--dur:12.9s;--delay:-10.4s;--drift:14px;--peak:.3"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">蚀影 · SHADE</span>
+      </div>
+      <div class="card__top"><span class="card__cost">1</span><span>无名残页</span><span class="card__rarity">RARE</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">造成 6 点伤害，施加 3 层中毒，抽 1 张牌。</p>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><h2>强化前后</h2><span>同一张卡，动势换一档</span></div>
+  <div class="row">
+    <article class="card" style="--school:#c06653;width:250px">
+      <div class="card__art">
+        <span class="live-art" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/sunder.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/sunder.webp" alt="">
+          <span class="live-art__motes"><i style="--x:16%;--s:2.6px;--dur:11.4s;--delay:-2.8s;--drift:14px;--peak:.48"></i><i style="--x:34%;--s:3.2px;--dur:13.2s;--delay:-7.4s;--drift:-16px;--peak:.36"></i><i style="--x:58%;--s:2.1px;--dur:9.6s;--delay:-1.2s;--drift:20px;--peak:.56"></i><i style="--x:76%;--s:3.5px;--dur:12.8s;--delay:-5.9s;--drift:-12px;--peak:.3"></i><i style="--x:91%;--s:2.4px;--dur:14.6s;--delay:-10.7s;--drift:17px;--peak:.42"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">剑势 · BLADE</span>
+      </div>
+      <div class="card__top"><span class="card__cost">2</span><span>裂空斩</span><span class="card__rarity">UNCOMMON</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">造成 12 点伤害，施加 1 层易伤。</p>
+    </article>
+
+    <article class="card is-up" style="--school:#c06653;width:250px">
+      <span class="card__tag">强化 +</span>
+      <div class="card__art">
+        <span class="live-art is-upgraded" data-live-art="card">
+          <img class="live-art__base" src="../assets/cards/sunder.webp" alt="">
+          <img class="live-art__bloom" src="../assets/cards/sunder.webp" alt="">
+          <span class="live-art__motes"><i style="--x:16%;--s:2.6px;--dur:11.4s;--delay:-2.8s;--drift:14px;--peak:.48"></i><i style="--x:34%;--s:3.2px;--dur:13.2s;--delay:-7.4s;--drift:-16px;--peak:.36"></i><i style="--x:58%;--s:2.1px;--dur:9.6s;--delay:-1.2s;--drift:20px;--peak:.56"></i><i style="--x:76%;--s:3.5px;--dur:12.8s;--delay:-5.9s;--drift:-12px;--peak:.3"></i><i style="--x:91%;--s:2.4px;--dur:14.6s;--delay:-10.7s;--drift:17px;--peak:.42"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+        <span class="card__school">剑势 · BLADE</span>
+      </div>
+      <div class="card__top"><span class="card__cost">2</span><span>裂空斩+</span><span class="card__rarity">UNCOMMON</span></div>
+      <div class="card__rule"></div>
+      <p class="card__desc">造成 16 点伤害，施加 2 层易伤。</p>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><h2>立绘</h2><span>战斗舞台 · 同一套动势</span></div>
+  <div class="row">
+    <div class="figure">
+      <div class="figure__frame">
+        <span class="live-art live-art--portrait" data-live-art="portrait">
+          <img class="live-art__base" src="../vibe_images/hero-blade_1792464043710_7fdf4ba2.png" alt="">
+          <img class="live-art__bloom" src="../vibe_images/hero-blade_1792464043710_7fdf4ba2.png" alt="">
+          <span class="live-art__motes"><i style="--x:24%;--s:3.2px;--dur:12.4s;--delay:-4.2s;--drift:14px;--peak:.5"></i><i style="--x:48%;--s:2.4px;--dur:15.1s;--delay:-9.6s;--drift:-20px;--peak:.34"></i><i style="--x:66%;--s:3.8px;--dur:10.8s;--delay:-2.2s;--drift:18px;--peak:.6"></i><i style="--x:82%;--s:2.6px;--dur:13.8s;--delay:-7.1s;--drift:-12px;--peak:.4"></i><i style="--x:35%;--s:2.1px;--dur:16.2s;--delay:-11.4s;--drift:9px;--peak:.3"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+      </div>
+      <div class="figure__caption"><b>破晓剑客</b>执牌者 · 呼吸 14s</div>
+    </div>
+
+    <div class="figure">
+      <div class="figure__frame">
+        <span class="live-art live-art--portrait is-upgraded" data-live-art="portrait">
+          <img class="live-art__base" src="../vibe_images/boss-mist-queen_1792411845323_4fb866de.png" alt="">
+          <img class="live-art__bloom" src="../vibe_images/boss-mist-queen_1792411845323_4fb866de.png" alt="">
+          <span class="live-art__motes"><i style="--x:22%;--s:3.4px;--dur:12.8s;--delay:-5.2s;--drift:16px;--peak:.5"></i><i style="--x:44%;--s:2.6px;--dur:14.6s;--delay:-8.8s;--drift:-22px;--peak:.36"></i><i style="--x:61%;--s:3.9px;--dur:10.4s;--delay:-1.8s;--drift:20px;--peak:.62"></i><i style="--x:79%;--s:2.8px;--dur:13.2s;--delay:-6.4s;--drift:-14px;--peak:.44"></i><i style="--x:33%;--s:2.2px;--dur:15.6s;--delay:-10.9s;--drift:11px;--peak:.32"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+      </div>
+      <div class="figure__caption"><b>雾之女王</b>梦魇之主 · 强化态 8.5s</div>
+    </div>
+
+    <div class="figure">
+      <div class="figure__frame">
+        <span class="live-art live-art--portrait" data-live-art="portrait">
+          <img class="live-art__base" src="../vibe_images/enemy-nightmare-dragon_1792408710467_d92cbcc2.png" alt="">
+          <img class="live-art__bloom" src="../vibe_images/enemy-nightmare-dragon_1792408710467_d92cbcc2.png" alt="">
+          <span class="live-art__motes"><i style="--x:28%;--s:3px;--dur:13.6s;--delay:-3.8s;--drift:13px;--peak:.44"></i><i style="--x:52%;--s:2.2px;--dur:11.6s;--delay:-7.7s;--drift:-16px;--peak:.3"></i><i style="--x:70%;--s:3.6px;--dur:14.8s;--delay:-2.9s;--drift:19px;--peak:.56"></i><i style="--x:86%;--s:2.4px;--dur:12.2s;--delay:-9.1s;--drift:-11px;--peak:.38"></i><i style="--x:41%;--s:2px;--dur:15.4s;--delay:-12.2s;--drift:10px;--peak:.28"></i></span>
+          <span class="live-art__sweep"></span><span class="live-art__rim"></span>
+        </span>
+      </div>
+      <div class="figure__caption"><b>梦魇之龙</b>游荡梦魇 · 呼吸 14s</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><h2>全部卡面</h2><span>100 张 · 按流派与效果排布</span></div>
+  <img class="sheet" src="card-art-sheet.jpg" alt="牌境 145 张 AI 卡面联排预览">
+</section>
+
+<div class="note">
+  <b>100 张全部就位</b>：<code>assets/cards/&lt;id&gt;.webp</code> 由 <code>card-art-manifest.js</code> 自动收录，卡牌一有 AI 卡面就不再画程序图，程序图只作为兜底保留。<br>
+  <b>真动图的插槽</b>：把 AI 循环视频放到 <code>assets/cards/&lt;id&gt;-up.mp4</code>，活画层会自动改用视频，静图作为首帧兜底；视频只在视野内播放，切到后台立即暂停。
+</div>
+
+<script>
+  const buttons = [...document.querySelectorAll('[data-toggle]')];
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      document.documentElement.dataset.motion = button.dataset.toggle;
+      buttons.forEach((item) => item.classList.toggle('is-on', item === button));
+    });
+  }
+</script>
+</body>
+</html>
