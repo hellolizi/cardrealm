@@ -165,7 +165,7 @@ export function renderMenu() {
     </main>
 
     <footer class="menu-footer">
-      <span>牌境 · v2.1.4</span>
+      <span>牌境 · v2.1.5</span>
       <span>每一次入梦，都是一副新的牌。</span>
     </footer>
   </div>`;

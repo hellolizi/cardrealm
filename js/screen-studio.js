@@ -224,20 +224,14 @@ function cardsTab() {
 
 function aiTab() {
   const ai = G.profile.ai;
+  const configured = Boolean(String(ai.baseUrl || '').trim());
   const providerCards = [
-    {
-      id: 'pollinations',
-      name: '公共梦境',
-      english: 'Pollinations',
-      desc: '免密钥的公共生图服务。开箱即用，速度取决于公共队列。',
-      badge: '免费',
-    },
     {
       id: 'openai',
       name: '自有接口',
       english: 'OpenAI Compatible',
       desc: '接入任意兼容 /images/generations 的生图 API，使用你自己的模型与密钥。',
-      badge: '自定义',
+      badge: '需要配置',
     },
   ];
   return `<div class="studio-ai">
@@ -245,12 +239,12 @@ function aiTab() {
       <div class="studio-panel-heading">
         <span class="section-eyebrow">IMAGE SUMMONING</span>
         <h1>AI 生图接口</h1>
-        <p>在这里选择梦的眼睛。密钥只保存在本机浏览器，不会写入任何日志。</p>
+        <p>游戏不提供公共生图服务。填入你自己的 OpenAI 兼容接口才能生成新形象；密钥只保存在本机浏览器，不会写入日志，也不会随存档导出。</p>
       </div>
       <div class="ai-provider-grid">
         ${providerCards.map((provider) => `<button type="button" class="ai-provider ${ai.provider === provider.id ? 'is-selected' : ''}" data-action="set-ai-provider" data-id="${provider.id}">
           <span class="ai-provider__top">
-            <span class="ai-provider__icon">${icon(provider.id === 'pollinations' ? 'sparkles' : 'lock', 20)}</span>
+            <span class="ai-provider__icon">${icon('lock', 20)}</span>
             <span class="ai-provider__badge">${provider.badge}</span>
             <span class="ai-provider__check">${ai.provider === provider.id ? icon('check', 14) : ''}</span>
           </span>
@@ -259,34 +253,26 @@ function aiTab() {
           <p>${provider.desc}</p>
         </button>`).join('')}
       </div>
-      ${ai.provider === 'openai'
-        ? `<div class="ai-fields">
-            <label class="field">
-              <span>接口地址 <em>Base URL</em></span>
-              <input type="text" value="${esc(ai.baseUrl)}" data-ai-field="baseUrl" placeholder="https://api.openai.com/v1" spellcheck="false">
-              <small>可填写以 /v1 结尾的地址，或完整的 /images/generations 地址。</small>
-            </label>
-            <label class="field">
-              <span>模型</span>
-              <input type="text" value="${esc(ai.model)}" data-ai-field="model" placeholder="gpt-image-1" spellcheck="false">
-            </label>
-            <label class="field field--wide">
-              <span>API Key <em>只存本机</em></span>
-              <span class="secret-field">
-                <input type="password" value="${esc(ai.apiKey)}" data-ai-field="apiKey" placeholder="sk-..." autocomplete="off" spellcheck="false">
-                ${ai.apiKey ? `<button type="button" class="text-button text-button--muted" data-action="clear-api-key">清除</button>` : ''}
-              </span>
-              <small>生图时会以 Bearer 方式发送到你填写的接口，不会发送到其他地方。</small>
-            </label>
-          </div>`
-        : `<div class="ai-public">
-            <span class="ai-public__icon">${icon('sparkles', 24)}</span>
-            <div>
-              <strong>公共免密钥服务已就绪</strong>
-              <p>提示词会发送至 Pollinations 的公共生图接口。图像生成完成后会立刻压缩并保存到本机；如果公共队列繁忙，可以稍后重试。</p>
-            </div>
-            <span class="ai-public__status"><span class="live-dot"></span> 无需配置</span>
-          </div>`}
+      <div class="ai-fields">
+        ${configured ? '' : '<p class="ai-fields__hint">还没填接口地址。填好下面三项才能生成，内置卡面与立绘不受影响。</p>'}
+        <label class="field">
+          <span>接口地址 <em>Base URL</em></span>
+          <input type="text" value="${esc(ai.baseUrl)}" data-ai-field="baseUrl" placeholder="https://api.openai.com/v1" spellcheck="false">
+          <small>可填写以 /v1 结尾的地址，或完整的 /images/generations 地址。</small>
+        </label>
+        <label class="field">
+          <span>模型</span>
+          <input type="text" value="${esc(ai.model)}" data-ai-field="model" placeholder="gpt-image-1" spellcheck="false">
+        </label>
+        <label class="field field--wide">
+          <span>API Key <em>只存本机</em></span>
+          <span class="secret-field">
+            <input type="password" value="${esc(ai.apiKey)}" data-ai-field="apiKey" placeholder="sk-..." autocomplete="off" spellcheck="false">
+            ${ai.apiKey ? `<button type="button" class="text-button text-button--muted" data-action="clear-api-key">清除</button>` : ''}
+          </span>
+          <small>生图时会以 Bearer 方式发送到你填写的接口，不会发送到其他地方。</small>
+        </label>
+      </div>
       <div class="ai-actions">
         <button type="button" class="button button--primary" data-action="open-generate" data-kind="hero">${icon('sparkles', 16)} 生成主角形象</button>
         <button type="button" class="button button--ghost" data-action="open-studio" data-tab="enemies">${icon('image', 16)} 为敌人换形</button>

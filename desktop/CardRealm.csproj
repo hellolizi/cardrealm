@@ -10,7 +10,7 @@
     <Platforms>x64</Platforms>
     <AssemblyName>CardRealm</AssemblyName>
     <RootNamespace>CardRealm</RootNamespace>
-    <Version>2.1.4</Version>
+    <Version>2.1.5</Version>
     <ApplicationIcon>assets\cardrealm.ico</ApplicationIcon>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <SatelliteResourceLanguages>zh-Hans;en</SatelliteResourceLanguages>

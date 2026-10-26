@@ -1436,6 +1436,10 @@ function handleAudioVolume(target) {
 async function runGeneration() {
   const m = G.ui.modal;
   if (!m || m.type !== 'generate' || m.data.busy) return;
+  if (!String(G.profile.ai.baseUrl || '').trim()) {
+    showToast('先在「AI 生图」里填写自己的接口地址与密钥。', 'warning');
+    return;
+  }
   const promptField = qs('[data-gen-prompt]', modalRoot);
   const subject = String(promptField?.value || m.data.subject || '').trim();
   if (!subject) {
@@ -2261,6 +2265,10 @@ function updateCardArtProgress(job) {
 }
 
 async function runCardArtJob({ only = null, force = false } = {}) {
+  if (!String(G.profile.ai.baseUrl || '').trim()) {
+    showToast('先在「AI 生图」里填写自己的接口地址与密钥。', 'warning');
+    return;
+  }
   const all = Object.values(CARD_MAP);
   const list = only
     ? all.filter((card) => card.id === only)
@@ -2890,7 +2898,7 @@ async function handleAction(action, el) {
       startUpload('enemy', el.dataset.enemyId);
       return;
     case 'set-ai-provider':
-      G.profile.ai.provider = el.dataset.id === 'openai' ? 'openai' : 'pollinations';
+      G.profile.ai.provider = 'openai';
       saveProfileNow();
       render();
       return;

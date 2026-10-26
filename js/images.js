@@ -1,5 +1,5 @@
 import { AI_STYLE_MAP, SCHOOLS } from './data.js';
-import { imageToCardDataUrl, imageToSquareDataUrl, loadImageElement, randomInt } from './utils.js';
+import { imageToCardDataUrl, imageToSquareDataUrl, loadImageElement } from './utils.js';
 
 function withTimeout(ms) {
   const controller = new AbortController();
@@ -135,38 +135,12 @@ async function generateWithOpenAiCompatible(prompt, config, shape = 'square') {
   }
 }
 
-async function generateWithPollinations(prompt, shape = 'square') {
-  const seed = randomInt(1, 2147483600);
-  const encoded = encodeURIComponent(prompt);
-  const width = shape === 'card' ? 1024 : 768;
-  const height = shape === 'card' ? 768 : 768;
-  const url = `https://image.pollinations.ai/prompt/${encoded}?width=${width}&height=${height}&seed=${seed}&nologo=true&model=flux&referrer=cardrealm`;
-  const timeout = withTimeout(120000);
-  try {
-    const response = await fetch(url, { signal: timeout.signal });
-    if (!response.ok) {
-      const body = await response.text().catch(() => '');
-      throw new Error(friendlyAiError(null, response.status, body));
-    }
-    const contentType = response.headers.get('content-type') || '';
-    if (!contentType.startsWith('image/')) {
-      throw new Error('公共生图服务返回的不是图片，请稍后再试或切换自有接口。');
-    }
-    const blob = await response.blob();
-    return encodeGenerated(blob, shape);
-  } catch (error) {
-    if (error?.name === 'AbortError') throw new Error(friendlyAiError(error));
-    if (error instanceof TypeError) {
-      try {
-        await loadImageElement(url);
-        return url;
-      } catch {
-        throw new Error('公共生图服务暂时无法访问。你可以在「AI 生图」中配置自己的接口。');
-      }
-    }
-    throw error instanceof Error ? error : new Error('生成失败，请稍后重试。');
-  } finally {
-    timeout.clear();
+function requireAiConfig(ai) {
+  if (!String(ai.baseUrl || '').trim()) {
+    throw new Error('AI 生图需要先配置接口：造物工坊 → AI 生图 → 自有接口，填入地址与密钥。');
+  }
+  if (ai.provider !== 'openai') {
+    throw new Error('AI 生图接口未配置，请到「AI 生图」里填写自己的 OpenAI 兼容接口。');
   }
 }
 
@@ -179,24 +153,10 @@ export function composePortraitPrompt(kind, subject, styleId, enemyLore = '') {
   return `${base} ${style.prompt}. Centered head-and-shoulders composition, dark atmospheric background, dramatic lighting, rich texture, no text, no letters, no watermark, no frame, no border.`;
 }
 
-export async function generatePortrait({ kind, subject, styleId }) {
-  const config = {
-    provider: 'pollinations',
-    baseUrl: '',
-    apiKey: '',
-    model: '',
-    ...(window.__CARDREALM_AI_CONFIG__ || {}),
-  };
-  const prompt = composePortraitPrompt(kind, subject, styleId);
-  return generatePortraitWithConfig({ prompt, config });
-}
-
 export async function generatePortraitWithConfig({ prompt, config }) {
   const ai = config || {};
-  if (ai.provider === 'openai') {
-    return generateWithOpenAiCompatible(prompt, ai);
-  }
-  return generateWithPollinations(prompt);
+  requireAiConfig(ai);
+  return generateWithOpenAiCompatible(prompt, ai);
 }
 
 export async function fileToCompressedPortrait(file, size = 620) {
@@ -277,8 +237,6 @@ export function composeCardArtPrompt(card) {
 export async function generateCardArtWithConfig({ card, config }) {
   const prompt = composeCardArtPrompt(card);
   const ai = config || {};
-  if (ai.provider === 'openai') {
-    return generateWithOpenAiCompatible(prompt, ai, 'card');
-  }
-  return generateWithPollinations(prompt, 'card');
+  requireAiConfig(ai);
+  return generateWithOpenAiCompatible(prompt, ai, 'card');
 }

@@ -239,7 +239,7 @@ function guideModal(m) {
     <section class="guide-block guide-block--wide">
       <span class="guide-block__index">07</span>
       <h3>${icon('sparkles', 17)} 造物工坊与 AI 生图</h3>
-      <p>照片只在本机浏览器中裁切、压缩与保存。AI 生图可以走免费的公共生图服务，也可以填入任意 OpenAI 兼容图片接口。自定义卡牌只出现在娱乐模式，保证冒险模式的平衡。</p>
+      <p>照片只在本机浏览器中裁切、压缩与保存。AI 生图需要填入自己的 OpenAI 兼容图片接口，密钥只留在本机。自定义卡牌只出现在娱乐模式，保证冒险模式的平衡。</p>
     </section>
     <section class="guide-block guide-block--wide">
       <span class="guide-block__index">08</span>
@@ -454,9 +454,9 @@ function generateModal(m) {
   const title = isEnemy ? `为「${skin.name}」生成新形态` : '生成主角的新形象';
   const currentImage = isEnemy ? skin.image : getHeroAvatar();
   const fallback = isEnemy ? enemy?.image : 'assets/heroes/default.webp';
-  const providerLabel = G.profile.ai.provider === 'openai'
+  const providerLabel = String(G.profile.ai.baseUrl || '').trim()
     ? `自有接口 · ${esc(G.profile.ai.model || '未填写模型')}`
-    : '公共免密钥服务 · Pollinations';
+    : '未配置接口';
   const body = `<div class="generate-layout">
     <div class="generate-preview">
       <span class="generate-preview__frame">${imageTag(currentImage, fallback, '当前形象', '', false)}</span>
@@ -1750,9 +1750,9 @@ function cardArtModal(m) {
   const builtin = cards.filter((card) => !peekCardArt(card.id) && cardArtSource(card)).length;
   const filtered = schoolFilter === 'all' ? cards : cards.filter((card) => card.school === schoolFilter);
   const ai = G.profile.ai || {};
-  const provider = ai.provider === 'openai'
+  const provider = String(ai.baseUrl || '').trim()
     ? `自有接口 · ${esc(ai.model || '未填写模型')}`
-    : '公共免密钥服务 · Pollinations';
+    : '未配置接口';
   const filters = [
     ['all', '全部', '#b48bc9'],
     ...Object.entries(SCHOOLS).map(([id, school]) => [id, school.name, school.color]),

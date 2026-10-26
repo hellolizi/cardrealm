@@ -68,7 +68,7 @@ function createDefaultProfile() {
       music: {},
     },
     ai: {
-      provider: 'pollinations',
+      provider: 'openai',
       baseUrl: 'https://api.openai.com/v1',
       apiKey: '',
       model: 'gpt-image-1',
@@ -222,8 +222,8 @@ function sanitizeProfile(raw) {
       .filter((id) => typeof id === 'string' && (CARD_MAP[id] || profile.customCards.some((card) => card.id === id)))
       .slice(0, 40);
   }
-  if (!['pollinations', 'openai'].includes(profile.ai.provider)) {
-    profile.ai.provider = 'pollinations';
+  if (profile.ai.provider !== 'openai') {
+    profile.ai.provider = 'openai';
   }
   profile.ai.baseUrl = String(profile.ai.baseUrl || base.ai.baseUrl).slice(0, 300);
   profile.ai.apiKey = String(profile.ai.apiKey || '').slice(0, 400);
