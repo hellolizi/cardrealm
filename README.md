@@ -50,7 +50,7 @@
 
 ## 直接开玩
 
-Windows 10 / 11 64 位。到 [Releases](../../releases) 下载 `CardRealm-win-x64.zip`，解压后双击 `CardRealm.exe`。
+Windows 10 / 11 64 位。到 [Releases](releases) 下载 `CardRealm-win-x64.zip`，解压后双击 `CardRealm.exe`。
 
 - 不要只复制 exe，同目录的 `wwwroot` 是游戏资源，缺了起不来。
 - 程序自带 .NET 运行时，但需要 **WebView2 Runtime**。Win11 和多数 Win10 已经自带，缺的话去[微软官网](https://developer.microsoft.com/microsoft-edge/webview2/)装 Evergreen Runtime。
