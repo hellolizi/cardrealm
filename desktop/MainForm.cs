@@ -86,9 +86,15 @@ public sealed class MainForm : Form
 
             core.NavigationStarting += (_, args) =>
             {
-                if (!IsAppUrl(args.Uri)) args.Cancel = true;
+                if (IsAppUrl(args.Uri)) return;
+                args.Cancel = true;
+                OpenExternal(args.Uri);
             };
-            core.NewWindowRequested += (_, args) => args.Handled = true;
+            core.NewWindowRequested += (_, args) =>
+            {
+                args.Handled = true;
+                OpenExternal(args.Uri);
+            };
             core.PermissionRequested += (_, args) =>
             {
                 args.State = args.PermissionKind == CoreWebView2PermissionKind.ClipboardRead
@@ -173,6 +179,22 @@ public sealed class MainForm : Form
         return Uri.TryCreate(uri, UriKind.Absolute, out var parsed)
             && parsed.Scheme == Uri.UriSchemeHttp
             && parsed.Host.Equals(VirtualHost, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static void OpenExternal(string uri)
+    {
+        if (!Uri.TryCreate(uri, UriKind.Absolute, out var parsed)) return;
+        if (parsed.Scheme != Uri.UriSchemeHttp
+            && parsed.Scheme != Uri.UriSchemeHttps
+            && parsed.Scheme != Uri.UriSchemeMailto) return;
+        try
+        {
+            Process.Start(new ProcessStartInfo(parsed.AbsoluteUri) { UseShellExecute = true });
+        }
+        catch
+        {
+            // 系统没有默认浏览器或邮件客户端时静默失败，不打断游戏
+        }
     }
 
     private void ToggleFullscreen()

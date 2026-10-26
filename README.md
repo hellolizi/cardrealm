@@ -4,7 +4,7 @@
 
 卡牌肉鸽，舞台是八座靠航路连起来的梦岛。单机为主，也能两个人联机。Windows 桌面版和网页版是同一份代码。
 
-当前版本：**v2.1.5**
+当前版本：**v2.1.6**
 
 ![牌境主界面](docs/screenshots/title.jpg)
 
@@ -138,6 +138,15 @@ dotnet publish -c Release -r win-x64 --self-contained true \
 - [设计调研](docs/design-research.md)：同类游戏的做法与取舍
 - [联机部署](docs/online-server.md)：从裸机到 HTTPS
 - [活画试片室](docs/motion-lab.html)：卡面动效与强化对比
+
+## 反馈
+
+玩到不对劲的地方，或者想聊设计，都可以：
+
+- [GitHub 讨论区](https://github.com/hellolizi/cardrealm/discussions)：玩法、想法、截图
+- [Issues](https://github.com/hellolizi/cardrealm/issues)：能复现的 bug
+
+游戏主界面右上角有「反馈」入口。报问题时带上版本号、系统和复现步骤；存档相关的先在主界面「存档备份」里导出一份附上。
 
 ## 许可
 

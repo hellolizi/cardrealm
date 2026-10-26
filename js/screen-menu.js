@@ -62,6 +62,7 @@ export function renderMenu() {
         <button type="button" class="text-button" data-action="open-achievements">${icon('crown', 16)} 成就 ${achievementTally.unlocked}/${achievementTally.total}</button>
         <button type="button" class="text-button" data-action="open-guide">${icon('help', 16)} 玩法指南</button>
         ${topbarMuteButton()}
+        <button type="button" class="text-button" data-action="open-feedback">${icon('help', 16)} 反馈</button>
         <button type="button" class="text-button text-button--accent" data-action="open-studio" data-tab="hero">${icon('wand', 16)} 造物工坊</button>
       </nav>
     </header>
@@ -165,7 +166,7 @@ export function renderMenu() {
     </main>
 
     <footer class="menu-footer">
-      <span>牌境 · v2.1.5</span>
+      <span>牌境 · v2.1.6</span>
       <span>每一次入梦，都是一副新的牌。</span>
     </footer>
   </div>`;

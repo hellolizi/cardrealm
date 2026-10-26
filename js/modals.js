@@ -1806,6 +1806,32 @@ function cardArtModal(m) {
   });
 }
 
+function feedbackModal(m) {
+  const body = `<div class="feedback-body">
+    <p class="feedback-lead">遇到 bug、觉得哪张牌离谱、或者只是想聊聊这趟梦，都可以从下面找到我。写明版本和平台，能少一轮来回。</p>
+    <div class="feedback-links">
+      <a class="feedback-link" href="https://github.com/hellolizi/cardrealm/discussions" target="_blank" rel="noopener">
+        <span class="feedback-link__icon">${icon('users', 18)}</span>
+        <span class="feedback-link__copy"><strong>GitHub 讨论区</strong><small>聊玩法、提想法、贴截图</small></span>
+        <span class="feedback-link__go">${icon('right', 15)}</span>
+      </a>
+      <a class="feedback-link" href="https://github.com/hellolizi/cardrealm/issues" target="_blank" rel="noopener">
+        <span class="feedback-link__icon">${icon('scroll', 18)}</span>
+        <span class="feedback-link__copy"><strong>提交 Issue</strong><small>能复现的 bug 放这里最好</small></span>
+        <span class="feedback-link__go">${icon('right', 15)}</span>
+      </a>
+    </div>
+    <p class="feedback-note">当前版本 v2.1.6。存档出问题时，先在主界面「存档备份」里导出一份，附在反馈里最有用。</p>
+  </div>`;
+  return shell(m, {
+    eyebrow: 'FEEDBACK',
+    title: '把梦说给我听',
+    subtitle: '每一条都会看。',
+    body,
+    className: 'modal--feedback',
+  });
+}
+
 export function renderModal() {
   const m = G.ui.modal;
   if (!m) return '';
@@ -1814,6 +1840,8 @@ export function renderModal() {
       return awakeningModal(m);
     case 'guide':
       return guideModal(m);
+    case 'feedback':
+      return feedbackModal(m);
     case 'confirm':
       return confirmModal(m);
     case 'deck-view':

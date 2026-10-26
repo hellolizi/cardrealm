@@ -2897,6 +2897,9 @@ async function handleAction(action, el) {
     case 'upload-enemy':
       startUpload('enemy', el.dataset.enemyId);
       return;
+    case 'open-feedback':
+      openModal('feedback', {});
+      return;
     case 'set-ai-provider':
       G.profile.ai.provider = 'openai';
       saveProfileNow();
