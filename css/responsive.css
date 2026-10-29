@@ -2145,3 +2145,43 @@
     transition: none;
   }
 }
+
+/* H5 phone topbar: keep the compact actions on one line */
+@media (max-width: 640px) {
+  .menu-topbar {
+    gap: 10px;
+  }
+
+  .brand,
+  .menu-topbar__actions {
+    flex: 0 0 auto;
+  }
+
+  .menu-topbar__actions {
+    gap: 4px;
+  }
+
+  .menu-topbar__actions .text-button,
+  .menu-topbar__actions .icon-button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 370px) {
+  .brand__text small {
+    display: none;
+  }
+
+  .menu-topbar__actions .text-button {
+    padding: 6px 4px;
+  }
+}
+
+/* Phone widths: the workshop shortcut lives in the menu footer */
+@media (max-width: 480px) {
+  .menu-topbar__actions [data-action="open-studio"] {
+    display: none;
+  }
+}

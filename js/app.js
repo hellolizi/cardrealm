@@ -2704,6 +2704,7 @@ async function handleAction(action, el) {
       render();
       return;
     case 'open-online':
+      if (document.querySelector('meta[name="cardrealm-online"]')?.content === 'off') return;
       setScreen('online');
       render();
       return;

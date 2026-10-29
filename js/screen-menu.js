@@ -17,6 +17,10 @@ function profileStats() {
   return G.profile.stats || { runs: 0, wins: 0 };
 }
 
+function onlineEnabled() {
+  return document.querySelector('meta[name="cardrealm-online"]')?.content !== 'off';
+}
+
 function starterGlyphs(origin) {
   const uniqueIds = [...new Set(origin.starter)];
   return uniqueIds
@@ -97,11 +101,11 @@ export function renderMenu() {
             <span class="menu-action__copy"><strong>无尽回廊</strong><small>${Number(G.profile.endlessBest) > 0 ? `最远第 ${Number(G.profile.endlessBest)} 层 · 独立于主线` : '独立于主线 · 一层一层往下沉'}</small></span>
             <span class="menu-action__arrow">${icon('right', 20)}</span>
           </button>
-          <button type="button" class="menu-action menu-action--online" data-action="open-online">
+          ${onlineEnabled() ? `<button type="button" class="menu-action menu-action--online" data-action="open-online">
             <span class="menu-action__sigil">${icon('users', 22)}</span>
             <span class="menu-action__copy"><strong>联机梦境</strong><small>镜像决斗 · 共梦之战 · 两个人一场梦</small></span>
             <span class="menu-action__arrow">${icon('right', 20)}</span>
-          </button>
+          </button>` : ''}
           <button type="button" class="menu-daily ${dailyDone ? 'is-done' : ''}" data-action="start-daily" title="${esc(`${daily.label} · ${daily.originName} · ${daily.bossName} · ${daily.deckSize} 张固定牌组 · 层级 ${daily.ascension}`)}">
             <span class="menu-daily__sigil">${dailyDone ? icon('check', 18) : '日'}</span>
             <span class="menu-daily__copy">
