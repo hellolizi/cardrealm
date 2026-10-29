@@ -2,9 +2,11 @@
 
 十二年前，白鹭号在凌晨三点十七分沉没。你从一本写满「全员生还」的假日志里醒来，手里只剩一副牌。
 
-卡牌肉鸽，舞台是八座靠航路连起来的梦岛。单机为主，也能两个人联机。Windows 桌面版和网页版是同一份代码。
+卡牌肉鸽，舞台是八座靠航路连起来的梦岛。单机为主，也能两个人联机。Windows 桌面版和网页版是同一份代码。公开网页版只保留单机，联机入口在桌面版或自建部署里。
 
 当前版本：**v2.1.6**
+
+**在线试玩：** [hellolizi.github.io/cardrealm](https://hellolizi.github.io/cardrealm/)
 
 ![牌境主界面](docs/screenshots/title.jpg)
 
@@ -64,6 +66,8 @@ Windows 10 / 11 64 位。到 [Releases](releases) 下载 `CardRealm-win-x64.zip`
 python -m http.server 4173
 # 打开 http://127.0.0.1:4173
 ```
+
+仓库里的 GitHub Pages 构建会隐藏联机入口，只保留单机；需要联机时用 `tools/build-web.sh` 的产物并自建中继。
 
 要联机的话，另开一个终端跑中继：
 
